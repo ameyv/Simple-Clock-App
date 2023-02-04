@@ -6,7 +6,8 @@ const CONSTANTS = {
 	weather_api_url: 'http://api.weatherapi.com/v1/forecast.json',
 	weather_api_key: '77612029e74a435081a25921230302',
 	current_city: 'Montréal',
-	forecast_days: 4
+	forecast_days: 4,
+	temperature_format: '°C'
 }
 const url = `${CONSTANTS.weather_api_url}?key=${CONSTANTS.weather_api_key}&q=${CONSTANTS.current_city}&days=${CONSTANTS.forecast_days}&aqi=yes`;
 const weather_condition = [{ 
@@ -186,25 +187,26 @@ function getIcon(code, is_day) {
 
 function showData(res) {
 	let weather_icon = getIcon(res.current.condition.code, res.current.is_day);
+	let i = document.createElement('i');
 	document.querySelector('.background-image').style.backgroundImage = 'url(https://source.unsplash.com/random/?'+CONSTANTS.current_city+'&1)';//'url(' + IMAGES[Math.floor(Math.random() * IMAGES.length)] +')';
 	document.querySelector('.weather-side').style.backgroundImage = 'url(https://source.unsplash.com/random/?'+weather_icon+'&1)';//'url(' + IMAGES[Math.floor(Math.random() * IMAGES.length)] +')';
     document.querySelector('.date-dayname').textContent = new Date(res.location.localtime).getDayName();
     document.querySelector('.date-day').textContent = new Date().getDate() + ' ' + new Date().getMonthName() + ' ' + new Date().getFullYear();
     document.querySelector('.location').textContent = res.location.name + ', ' + res.location.country;
-    document.querySelector('.weather-temp').textContent = res.current.temp_c + '°C';
+    document.querySelector('.weather-temp').textContent = res.current.temp_c + CONSTANTS.temperature_format;
     document.querySelector('.weather-desc').textContent = res.current.condition.text;
 	document.querySelector('.weather-container svg.feather.feather-sun').remove();
-	let i = document.createElement('i');
 	i.classList.add('weather-icon');
 	i.setAttribute('data-feather', weather_icon);
 	document.querySelector('.weather-container').insertBefore(i, document.querySelector('.weather-temp'));
+    document.querySelector('.weather-feels-like-value').textContent = res.current.feelslike_c + CONSTANTS.temperature_format;
+
 	showOtherData({
 		precipitation: res.current.precip_in,
 		humidity: res.current.humidity,
 		wind: res.current.wind_kph,
 		aqi: res.current.air_quality['us-epa-index']
 	});
-    document.querySelector('.weather-feels-like-value').textContent = res.current.feelslike_c + '°C';
 
     var list = document.querySelector('.week-list').children;
     Array.from(list).forEach(function(el, i) {
@@ -215,7 +217,7 @@ function showData(res) {
 			icon.setAttribute('data-feather', getIcon(res.forecast.forecastday[i].day.condition.code, true));
 			el.insertBefore(icon, el.querySelector('.day-name'));
             el.querySelector('.day-name').textContent = new Date(res.forecast.forecastday[i].date + ' ').getShortDayName();
-            el.querySelector('.day-temp').textContent = res.forecast.forecastday[i].day.avgtemp_c + '°C';
+            el.querySelector('.day-temp').textContent = res.forecast.forecastday[i].day.avgtemp_c + CONSTANTS.temperature_format;
 			el.setAttribute('precip_in', res.forecast.forecastday[i].day.totalprecip_in);
 			el.setAttribute('humidity', res.forecast.forecastday[i].day.avghumidity);
 			el.setAttribute('wind', res.forecast.forecastday[i].day.avgvis_km);
