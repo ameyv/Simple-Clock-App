@@ -31,6 +31,7 @@ body {
 	flex-direction: column;
 	flex-wrap: wrap;
 	align-items: center;
+	z-index: 2;
 }
 .clock__block {
 	background-color: hsl(var(--hue),10%,90%);
@@ -191,13 +192,14 @@ body {
 	background-color: #222831;
 	color: #ffffff;
 	height: 400px;
+	z-index: 2;
 }
 
 .weather-side {
 	position: relative;
 	height: 100%;
 	border-radius: 25px;
-	background-image: url("https://images.unsplash.com/photo-1559963110-71b394e7494d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=675&q=80");
+	background-image: url("https://images.unsplash.com/photo-1674217223882-5d7e774ba952?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80");
 	width: 300px;
 	-webkit-box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.2);
 	        box-shadow: 0 0 20px -10px rgba(0, 0, 0, 0.2);
@@ -224,7 +226,7 @@ body {
 	left: 0;
 	background-image: var(--gradient);
 	border-radius: 25px;
-	opacity: 0.8;
+	opacity: 0.3;
 }
 
 .date-container {
@@ -391,4 +393,27 @@ body {
 	height: 1em;
 	width: auto;
 	margin-right: 5px;
+}
+
+#app-background {
+    height: 100%;
+    left: 0px;
+    overflow: hidden;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    z-index: 1;
+}
+
+#app-background #app-background-image {
+    background-image: url(https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2076&q=80);
+    height: 100%;
+    transition: filter 250ms, transform 250ms;
+    width: 100%;
+}
+
+.background-image {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }

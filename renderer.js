@@ -2,7 +2,13 @@ window.addEventListener("DOMContentLoaded",() => {
 	const clock = new BouncyBlockClock(".clock");
 });
 
-const url = 'http://api.weatherapi.com/v1/forecast.json?key=77612029e74a435081a25921230302&q=Montréal&days=4&aqi=yes&alerts=yes';
+const CONSTANTS = {
+	weather_api_url: 'http://api.weatherapi.com/v1/forecast.json',
+	weather_api_key: '77612029e74a435081a25921230302',
+	current_city: 'Montréal',
+	forecast_days: 4
+}
+const url = `${CONSTANTS.weather_api_url}?key=${CONSTANTS.weather_api_key}&q=${CONSTANTS.current_city}&days=${CONSTANTS.forecast_days}&aqi=yes`;
 const weather_condition = [{ 
   "code" : 1000, "day" : "Sunny", "night" : "Clear", "icon" : 'sun' }, 
 { "code" : 1003, "day" : "Partly cloudy", "night" : "Partly cloudy", "icon" : 'cloud' }, 
@@ -54,18 +60,26 @@ const weather_condition = [{
 { "code" : 1282, "day" : "Moderate or heavy snow with thunder", "night" : "Moderate or heavy snow with thunder", "icon" : 'cloud-snow' } ];
 
 const AQI = [{
-	code: 1, name: 'Good'
+	code: 1, name: 'Good 😇'
 }, {
-	code: 2, name: 'Moderate'
+	code: 2, name: 'Moderate 🙂'
 }, {
-	code: 3, name: 'Unhealthy'
+	code: 3, name: 'Unhealthy 🥺'
 }, {
-	code: 4, name: 'Unhealthy'
+	code: 4, name: 'Unhealthy 😵'
 }, {
-	code: 5, name: 'Bad'
+	code: 5, name: 'Bad 🤢'
 }, {
-	code: 6, name: 'Hazardous'
-}]
+	code: 6, name: 'Hazardous ☠️'
+}];
+
+const IMAGES = [
+	'https://images.unsplash.com/photo-1674217223882-5d7e774ba952?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80',
+	'https://images.unsplash.com/photo-1672985769289-9056a3ca9b16?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=436&q=80',
+	'https://images.unsplash.com/photo-1674188919462-44cdbbdbcbc4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80',
+	'https://images.unsplash.com/photo-1674066636011-d445199acada?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=374&q=80',
+	'https://images.unsplash.com/photo-1673285105552-4fdf089c35d4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=466&q=80'
+];
 
 class BouncyBlockClock {
 	constructor(qs) {
@@ -171,6 +185,9 @@ function getIcon(code, is_day) {
 }
 
 function showData(res) {
+	let weather_icon = getIcon(res.current.condition.code, res.current.is_day);
+	document.querySelector('.background-image').style.backgroundImage = 'url(https://source.unsplash.com/random/?'+CONSTANTS.current_city+'&1)';//'url(' + IMAGES[Math.floor(Math.random() * IMAGES.length)] +')';
+	document.querySelector('.weather-side').style.backgroundImage = 'url(https://source.unsplash.com/random/?'+weather_icon+'&1)';//'url(' + IMAGES[Math.floor(Math.random() * IMAGES.length)] +')';
     document.querySelector('.date-dayname').textContent = new Date(res.location.localtime).getDayName();
     document.querySelector('.date-day').textContent = new Date().getDate() + ' ' + new Date().getMonthName() + ' ' + new Date().getFullYear();
     document.querySelector('.location').textContent = res.location.name + ', ' + res.location.country;
@@ -179,7 +196,7 @@ function showData(res) {
 	document.querySelector('.weather-container svg.feather.feather-sun').remove();
 	let i = document.createElement('i');
 	i.classList.add('weather-icon');
-	i.setAttribute('data-feather', getIcon(res.current.condition.code, res.current.is_day));
+	i.setAttribute('data-feather', weather_icon);
 	document.querySelector('.weather-container').insertBefore(i, document.querySelector('.weather-temp'));
 	showOtherData({
 		precipitation: res.current.precip_in,
