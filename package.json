@@ -1,7 +1,7 @@
 {
   "name": "clock-app",
   "version": "1.0.0",
-  "description": "Simple Clock app with Electron.js",
+  "description": "Simple Clock app",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -14,7 +14,6 @@
     "url": "git+https://github.com/ameyv/Simple-Clock-App.git"
   },
   "keywords": [
-    "ElectronJS",
     "Clock",
     "JS",
     "CSS"
@@ -26,14 +25,9 @@
   },
   "homepage": "https://github.com/ameyv/Simple-Clock-App#readme",
   "devDependencies": {
-    "@electron-forge/cli": "^6.0.4",
-    "@electron-forge/maker-deb": "^6.0.4",
-    "@electron-forge/maker-rpm": "^6.0.4",
-    "@electron-forge/maker-squirrel": "^6.0.4",
-    "@electron-forge/maker-zip": "^6.0.4",
-    "electron": "^22.2.0"
+    
   },
   "dependencies": {
-    "electron-squirrel-startup": "^1.0.0"
+    
   }
 }
