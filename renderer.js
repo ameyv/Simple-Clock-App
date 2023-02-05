@@ -3,7 +3,7 @@ window.addEventListener("DOMContentLoaded",() => {
 });
 
 const CONSTANTS = {
-	weather_api_url: 'http://api.weatherapi.com/v1/forecast.json',
+	weather_api_url: 'https://api.weatherapi.com/v1/forecast.json',
 	weather_api_key: '77612029e74a435081a25921230302',
 	current_city: 'Montréal',
 	forecast_days: 4,
